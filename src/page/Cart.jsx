@@ -1,55 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../page-style/CartStyleDesktop.css";
+import { decrement, increment, removeItem } from "../redux/reducer/cartItems";
 
 const Cart = () => {
-  const products = [
-    {
-      id: 1,
-      image: "hoodie.jpg",
-      name: "Brown Hoodie",
-      category: "Hoodie",
-      color: "Brown",
-      size: "M",
-      price: 20.78,
-    },
-    {
-      id: 2,
-      image: "blazer.jpg",
-      name: "Green-Army Blazer",
-      category: "Blazer",
-      color: "Green-Army",
-      size: "L",
-      price: 30.88,
-    },
-    {
-      id: 3,
-      image: "skirt.jpg",
-      name: "Orange Skirt",
-      category: "Skirt",
-      color: "Orange",
-      size: "M",
-      price: 35.67,
-    },
-    {
-      id: 4,
-      image: "jacket.jpg",
-      name: "Navy Jacket",
-      category: "Jacket",
-      color: "Navy",
-      size: "L",
-      price: 25.49,
-    },
-    {
-      id: 5,
-      image: "trouser.jpg",
-      name: "Black Trouser",
-      category: "Trouser",
-      color: "Black",
-      size: "L",
-      price: 31.93,
-    },
-  ];
+  const count = useSelector((state) => state.cartItems.value);
+  const products = useSelector((state) => state.cartItems.products);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -71,18 +28,19 @@ const Cart = () => {
                     <span className="product-name">{item.name}</span>
                     <span className="input-group" id="input">
                       <button
+                        id="decrement-btn"
                         className="btn btn-outline-secondary"
                         type="button"
+                        onClick={() => dispatch(decrement())}
                       >
                         -
                       </button>
-                      <input
-                      // type="number"
-                      // defaultValue={1}
-                      />
+                      <input defaultValue={1} value={count} />
                       <button
+                        id="increment-btn"
                         className="btn btn-outline-secondary"
                         type="button"
+                        onClick={() => dispatch(increment())}
                       >
                         +
                       </button>
@@ -94,7 +52,11 @@ const Cart = () => {
                       <br />
                       Size: {item.size}
                     </p>
-                    <button className="btn btn-light" id="remove-btn">
+                    <button
+                      className="btn btn-light"
+                      id="remove-btn"
+                      onClick={() => dispatch(removeItem())}
+                    >
                       <i className="bi bi-trash-fill"></i> Remove Item
                     </button>
                     <button className="btn btn-light" id="wishlist-btn">
