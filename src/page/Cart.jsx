@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../page-style/CartStyleDesktop.css";
-import { decrement, increment, removeItem } from "../redux/reducer/cartItems";
+import "../page-style/CartStyleTablet.css";
+import "../page-style/CartStyleMobile.css";
+import { updateItemQuantity, removeItem, moveToWishlistItem } from "../redux/reducer/cartItems";
 
 const Cart = () => {
-  const count = useSelector((state) => state.cartItems.value);
   const products = useSelector((state) => state.cartItems.products);
   const dispatch = useDispatch();
 
@@ -21,45 +22,48 @@ const Cart = () => {
                 Cart ({products.length} {products.length > 1 ? "Items" : "Item"}
                 )
               </h5>
-              {products.map((item) => (
-                <div id="cart-item">
+              {products.map((item,index) => (
+                <div id="cart-item" key={item.id}>
                   <img src={item.image} />
                   <div className="cart-detail">
                     <span className="product-name">{item.name}</span>
                     <span className="input-group" id="input">
                       <button
                         id="decrement-btn"
-                        className="btn btn-outline-secondary"
+                        className="btn btn-outline-secondary btn-sm"
                         type="button"
-                        onClick={() => dispatch(decrement())}
+                        onClick={() => dispatch(updateItemQuantity({index: index, qty: item.qty -1}))}
                       >
                         -
                       </button>
-                      <input defaultValue={1} value={count} />
+                      <input defaultValue={1} value={item.qty} />
                       <button
                         id="increment-btn"
-                        className="btn btn-outline-secondary"
+                        className="btn btn-outline-secondary btn-sm"
                         type="button"
-                        onClick={() => dispatch(increment())}
+                        onClick={() => dispatch(updateItemQuantity({index: index, qty: item.qty +1}))}
                       >
                         +
                       </button>
                     </span>
-                    <p>
+                    <span className="cart-detail-2">
                       Category: {item.category}
                       <br />
                       Color: {item.color}
                       <br />
                       Size: {item.size}
-                    </p>
+                    </span>
+                    <br/>
                     <button
                       className="btn btn-light"
                       id="remove-btn"
-                      onClick={() => dispatch(removeItem())}
+                      onClick={() => dispatch(removeItem(index))}
                     >
                       <i className="bi bi-trash-fill"></i> Remove Item
                     </button>
-                    <button className="btn btn-light" id="wishlist-btn">
+                    <button className="btn btn-light" id="wishlist-btn"
+                    onClick={() => dispatch(moveToWishlistItem(index))}
+                    >
                       <i className="bi bi-heart-fill"></i> Move to Wishlist
                     </button>
                     <span className="product-price">
