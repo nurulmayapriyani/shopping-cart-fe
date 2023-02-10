@@ -80,7 +80,7 @@ const Cart = () => {
             <h5 className="card-title">The total amount of</h5>
             <div className="text-total-temporary">
               <span>Temporary Amount</span>
-              <span className="temporary-amount">$!dummy!</span>
+              <span className="temporary-amount">${products.map((item) => item.price).reduce((a,b) => a+b,0)}</span>
             </div>
             <br />
             <span>Shipping</span>
@@ -88,7 +88,7 @@ const Cart = () => {
             <br />
             <hr className="line" />
             <span className="text-vat-total">The total amount of</span>
-            <span className="vat-total">$!dummy!</span>
+            <span className="vat-total">${products.map((item) => item.price).reduce((a,b) => a+b,0)}</span>
             <br />
             <span className="text-vat-total">(including vat)</span>
             <br />

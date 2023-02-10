@@ -63,11 +63,11 @@ export const cart = createSlice({
       console.log("incbyamount");
       state.value += action.payload;
     },
-    removeItem: (state,e) => {
+    removeItem: (state, e) => {
       console.log("remove test", e.payload);
       state.products.splice(e.payload,1)
     },
-    moveToWishlistItem: (state,e, qty) => {
+    moveToWishlistItem: (state, e, qty) => {
       console.log("move test", e.payload, qty);
       state.products.splice(e.payload,1)
     },
