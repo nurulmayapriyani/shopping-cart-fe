@@ -56,6 +56,7 @@ export const cart = createSlice({
         qty: 1
       },
     ],
+    total: 0,
   },
 
   reducers: {
@@ -75,12 +76,12 @@ export const cart = createSlice({
       console.log("update test", e.payload)
       if(e.payload.qty === 1 || e.payload.qty > 1){
       state.products[e.payload.index].qty = e.payload.qty}
-    }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { updateItemQuantity, incrementByAmount, removeItem, moveToWishlistItem } =
+export const { updateItemQuantity, incrementByAmount, removeItem, moveToWishlistItem} =
   cart.actions;
 
 export default cart.reducer;
