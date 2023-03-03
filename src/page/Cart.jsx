@@ -7,7 +7,7 @@ import { updateItemQuantity, removeItem, moveToWishlistItem } from "../redux/red
 
 const Cart = () => {
   const products = useSelector((state) => state.cartItems.products);
-  const productsPrice = useSelector(() => products.map((item) => item.price).reduce((a,b) => a+b,0))
+  const productsPrice = useSelector(() => products.map((item) => item.price * item.qty).reduce((a,b) => a+b,0).toFixed(2))
   const dispatch = useDispatch();
 
   return (
@@ -81,7 +81,6 @@ const Cart = () => {
             <h5 className="card-title">The total amount of</h5>
             <div className="text-total-temporary">
               <span>Temporary Amount</span>
-              {/* <span className="temporary-amount">${products.map((item) => item.price).reduce((a,b) => a+b,0)}</span> */}
               <span className="temporary-amount">${productsPrice}</span>
             </div>
             <br />
@@ -90,7 +89,7 @@ const Cart = () => {
             <br />
             <hr className="line" />
             <span className="text-vat-total">The total amount of</span>
-            <span className="vat-total">${products.map((item) => item.price).reduce((a,b) => a+b,0)}</span>
+            <span className="vat-total">${productsPrice}</span>
             <br />
             <span className="text-vat-total">(including vat)</span>
             <br />
